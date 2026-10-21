@@ -38,7 +38,7 @@ export function KineticBrandmark({ heroElement }: KineticBrandmarkProps) {
     <motion.div className="hero-brand-stage" aria-hidden="true">
       <motion.img
         className="hero-brandmark"
-        src="/assets/big-mama-logo.png"
+        src={`${process.env.NEXT_PUBLIC_PAGES_BASE_PATH || ""}/assets/big-mama-logo.png`}
         alt=""
         width={834}
         height={860}
