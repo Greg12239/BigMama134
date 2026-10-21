@@ -45,8 +45,15 @@ const loaderExitDelay = prefersReducedMotion ? 140 : 1500;
 const loaderExitDuration = prefersReducedMotion ? 160 : 760;
 const loaderFailSafeDelay = prefersReducedMotion ? 900 : 3600;
 const isNextStaticExport = () => Boolean(document.querySelector('script[src*="/_next/"]'));
+const getAssetBasePath = () => {
+  const nextScript = document.querySelector('script[src*="/_next/"]');
+  const scriptUrl = nextScript?.getAttribute("src") || "";
+  const marker = "/_next/";
+  const index = scriptUrl.indexOf(marker);
+  return index > 0 ? scriptUrl.slice(0, index) : "";
+};
 const resolveMenuTitleAsset = (assetPath) => {
-  if (isNextStaticExport()) return `/assets/${assetPath}`;
+  if (isNextStaticExport()) return `${getAssetBasePath()}/assets/${assetPath}`;
   return new URL(`public/assets/${assetPath}`, document.baseURI).href;
 };
 const menuTitleAssets = {
@@ -2483,7 +2490,7 @@ function initLocationMap() {
     };
 
     const createMarkerIcon = () => window.L.icon({
-      iconUrl: "public/assets/contact/big-mama-map-pin.png",
+      iconUrl: resolveMenuTitleAsset("contact/big-mama-map-pin.png"),
       ...getMarkerGeometry(),
       className: "big-mama-map-marker",
     });
