@@ -9,7 +9,7 @@ function extractBodyMarkup(documentMarkup: string) {
 
   return bodyMatch[1]
     .replace(/\s*<script[\s\S]*?<\/script>/gi, "")
-    .replaceAll("public/assets/", "/assets/");
+    .replaceAll("public/assets/", `${process.env.GITHUB_PAGES_BASE_PATH || ""}/assets/`);
 }
 
 export function getLegacyPageMarkup() {
